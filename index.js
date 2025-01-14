@@ -1,18 +1,36 @@
 // let myArray = [1, 2, 3, 4, 4, 3];
 let defaultQuadrantCoordenades = [[0, 2], [3, 5], [6, 8]];
 // Initializing array of depth 2 and filling with 0
-let sudoku = new Array(9).fill(new Array(9).fill(0));
+//let zeros = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+//let sudoku_01 = Array(9).fill(Array(9));
 
-// fillUnsolvedSudoku(sudoku);
+let sudoku = new Array(9);
+
+for (let firstDimension = 0; firstDimension < 9; firstDimension++) {
+    sudoku[firstDimension] = new Array(9);
+    for (let secondDimension = 0; secondDimension < 9; secondDimension++) {
+        sudoku[firstDimension][secondDimension] = 0;
+    }
+}
+
+fillUnsolvedSudoku(sudoku);
 
 function fillUnsolvedSudoku(emptySudoku) {
-    let max = 38 + getRandomInt(4);
+    let max = 38 + getRandomInt(4); // 38
 
     for (let currentIteration = 0; currentIteration < max; currentIteration++) {
-        let targetRow = getRandomInt(8);
-        let targetColumn = getRandomInt(8);
+        let targetRow = getRandomInt(8, false);
+        let targetColumn = getRandomInt(8, false);
+        let randomNumber = getRandomInt(9, true);
 
-        // if ()
+        if(!isUniqueAmongBigBox(targetRow, targetColumn, randomNumber)) {
+            currentIteration--;
+            continue;
+        }
+        // console.log(targetRow + '    ' + targetColumn + '    ' + randomNumber);
+        // sudoku[targetRow].splice(targetColumn, 1, randomNumber);
+        sudoku[targetRow][targetColumn] = randomNumber;
+        // console.table(sudoku);
     }
 }
 
@@ -27,7 +45,7 @@ function isUniqueAmongBigBox(targetRow, targetColumn, number) {
             currentBigBox.push(sudoku[currentRow][currentColumn]);
         }
     }
-    return currentBigBox.includes(number);
+    return !currentBigBox.includes(number);
 }
 
 // 2nd rule
@@ -48,15 +66,16 @@ function isUniqueAmongColumnBigBoxes() {
 
 }
 
-sudoku[3][7] = 3;
-console.log(isUniqueAmongBigBox(3, 7, 2));
+// console.log(isUniqueAmongBigBox(3, 7, 2));
+// console.log(sudoku[0].splice(2, 1, 9));
+// console.log(sudoku[0]);
+// sudoku[0][1] = 3;
+console.table(sudoku);
 
-function getQuadrantXCoordenades() {
-    if (sudoku[Math.ceil(targetRow/3)]) {
-        
+function getRandomInt(max, shouldBeRoundedUp) {
+    if (shouldBeRoundedUp) {
+        return Math.ceil(Math.random() * max);
+    } else {
+        return Math.floor(Math.random() * max);
     }
-}
-
-function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
 }
