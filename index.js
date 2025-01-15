@@ -23,19 +23,26 @@ function fillUnsolvedSudoku(emptySudoku) {
         let targetColumn = getRandomInt(8, false);
         let randomNumber = getRandomInt(9, true);
 
-        if(!isUniqueAmongBigBox(targetRow, targetColumn, randomNumber)) {
+        if (sudoku[targetRow][targetColumn] != 0) {
             currentIteration--;
             continue;
+        } else if (existsInItsBigBox(targetRow, targetColumn, randomNumber)) {
+            currentIteration--;
+            continue;
+        } else if (existsInItsRow(targetRow, randomNumber) || existsInItsColumn(targetColumn, randomNumber)) {
+            currentIteration--;
+            continue;
+        } else if (false) {
+            // null
         }
-        // console.log(targetRow + '    ' + targetColumn + '    ' + randomNumber);
-        // sudoku[targetRow].splice(targetColumn, 1, randomNumber);
+        console.log(randomNumber);
         sudoku[targetRow][targetColumn] = randomNumber;
-        // console.table(sudoku);
+        
     }
 }
 
-// 1st rule
-function isUniqueAmongBigBox(targetRow, targetColumn, number) {
+// 1st rule - Done
+function existsInItsBigBox(targetRow, targetColumn, number) {
     let rowCoordenades = defaultQuadrantCoordenades[Math.floor(targetRow/3)]; // array
     let columnCoordenades = defaultQuadrantCoordenades[Math.floor(targetColumn/3)]; // array
     let currentBigBox = [];
@@ -45,16 +52,28 @@ function isUniqueAmongBigBox(targetRow, targetColumn, number) {
             currentBigBox.push(sudoku[currentRow][currentColumn]);
         }
     }
-    return !currentBigBox.includes(number);
+    return currentBigBox.includes(number);
 }
 
 // 2nd rule
-function isUniqueAmongRow() {
+function existsInItsRow(targetRow, number) {
+    let rowElements = [];
 
+    for (let currentColumn = 0; currentColumn < 9; currentColumn++) {
+        rowElements.push(sudoku[targetRow][currentColumn]);
+    }
+
+    return rowElements.includes(number);
 }
 
-function isUniqueAmongColumn() {
+function existsInItsColumn(targetColumn, number) {
+    let columnElements = [];
 
+    for (let currentRow = 0; currentRow < 9; currentRow++) {
+        columnElements.push(sudoku[currentRow][targetColumn]);
+    }
+    
+    return columnElements.includes(number);
 }
 
 // 3rd rule
