@@ -1,12 +1,15 @@
 {
-  "name": "omo_sudoku",
+  "name": "sudoku",
   "version": "1.0.0",
-  "description": "",
+  "description": "sudoku game",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "author": "aldocesarmg",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
 }
