@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import { Button } from "flowbite-react";
+
 import { SudokuTable } from "./SudokuTable";
 import { isThereAnySudokuCollision } from "../sudoku";
 
@@ -47,6 +49,7 @@ export function GameTable() {
     return(
         <>
             <SudokuTable sudoku={sudokuBoard} />
+            
         </>
     );
 }
